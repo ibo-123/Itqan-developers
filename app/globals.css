@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+:root {
+  --emerald: #123c32;
+  --emerald-deep: #0a221c;
+  --emerald-mid: #1a4f42;
+  --gold: #d5b66a;
+  --gold-light: #e8d19a;
+  --gold-deep: #b8954a;
+  --soft: #f4f6f3;
+  --ink: #14201c;
+  --white: #ffffff;
+  --sand: #e8ebe4;
+  --background: var(--soft);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-emerald: var(--emerald);
+  --color-emerald-deep: var(--emerald-deep);
+  --color-emerald-mid: var(--emerald-mid);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-deep: var(--gold-deep);
+  --color-soft: var(--soft);
+  --color-sand: var(--sand);
+  --color-ink: var(--ink);
+  --color-white: var(--white);
+  --font-sans: var(--font-sans-body);
+  --font-display: var(--font-display);
+  --font-arabic: var(--font-arabic);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background:
+      radial-gradient(ellipse at top, rgba(18, 60, 50, 0.04), transparent 45%),
+      var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans-body), system-ui, sans-serif;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--gold) 45%, transparent);
+    color: var(--ink);
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display), var(--font-sans-body), system-ui, sans-serif;
+}
+
+@utility font-arabic {
+  font-family: var(--font-arabic), Georgia, serif;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-18px) rotate(2deg);
+  }
+}
+
+@keyframes shimmer-line {
+  0% {
+    transform: translateX(-30%);
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(30%);
+    opacity: 0.35;
+  }
+}
+
+@utility animate-fade-up {
+  animation: fade-up 0.9s ease-out both;
+}
+
+@utility animate-fade-up-delayed {
+  animation: fade-up 1s ease-out 0.25s both;
+}
+
+@utility animate-float {
+  animation: float 7s ease-in-out infinite;
+}
+
+@utility animate-float-slow {
+  animation: float-slow 11s ease-in-out infinite;
+}
+
+@utility animate-shimmer-line {
+  animation: shimmer-line 5.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-fade-up,
+  .animate-fade-up-delayed,
+  .animate-float,
+  .animate-float-slow,
+  .animate-shimmer-line {
+    animation: none !important;
+  }
+}

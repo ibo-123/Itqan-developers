@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="14" fill="#0C2A23"/>
+  <path
+    d="M32 6 L37.2 20.2 L52 20.2 L40 29.2 L44.8 43.5 L32 34.8 L19.2 43.5 L24 29.2 L12 20.2 L26.8 20.2 Z"
+    fill="none"
+    stroke="#D5B66A"
+    stroke-width="1.6"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M32 14 L35.2 22.8 L44.5 22.8 L37 28.2 L39.8 37 L32 31.6 L24.2 37 L27 28.2 L19.5 22.8 L28.8 22.8 Z"
+    fill="#D5B66A"
+    opacity="0.92"
+  />
+  <circle cx="32" cy="28" r="7.5" fill="#0C2A23"/>
+  <text
+    x="32"
+    y="32.5"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="12"
+    font-weight="700"
+    fill="#D5B66A"
+  >%</text>
+</svg>
