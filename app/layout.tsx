@@ -28,14 +28,14 @@ export const metadata: Metadata = {
     template: `%s · ${SITE.name}`,
   },
   description:
-    "ITQAN DEVELOPERS is a growing software development and technology community at ASTU — building meaningful digital solutions with purpose and excellence.",
+    "ITQAN DEVELOPERS is a technology community at ASTU where students learn, collaborate, and build meaningful digital solutions with purpose and mastery.",
   keywords: [
     "ITQAN DEVELOPERS",
     "إتقان",
     "ASTU",
     "software community",
     "student developers",
-    "ASTU_MSJ",
+    "recruitment",
   ],
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],

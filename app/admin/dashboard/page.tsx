@@ -6,13 +6,15 @@ import { StatCard } from "@/components/dashboard/StatCard";
 
 type Stats = {
   totalApplications: number;
-  pending: number;
+  submitted: number;
   underReview: number;
+  practicalAssessment: number;
+  interview: number;
   shortlisted: number;
   accepted: number;
   rejected: number;
   activeMembers: number;
-  bySpecialization: { specialization: string; count: number }[];
+  byPosition: { position: string; count: number }[];
 };
 
 export default function DashboardOverviewPage() {
@@ -33,10 +35,10 @@ export default function DashboardOverviewPage() {
     <div className="space-y-8">
       <div>
         <h1 className="font-display text-3xl font-semibold text-ink">
-          Overview
+          Recruitment overview
         </h1>
         <p className="mt-1 text-sm text-ink/60">
-          Live recruitment and membership metrics from the database.
+          Live ITQAN DEVELOPERS applicant funnel from the database.
         </p>
       </div>
 
@@ -54,8 +56,10 @@ export default function DashboardOverviewPage() {
         <>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <StatCard label="Total applications" value={stats.totalApplications} />
-            <StatCard label="Pending" value={stats.pending} />
+            <StatCard label="Submitted / new" value={stats.submitted} />
             <StatCard label="Under review" value={stats.underReview} />
+            <StatCard label="Practical assessment" value={stats.practicalAssessment} />
+            <StatCard label="Interview" value={stats.interview} />
             <StatCard label="Shortlisted" value={stats.shortlisted} />
             <StatCard label="Accepted" value={stats.accepted} />
             <StatCard label="Rejected" value={stats.rejected} />
@@ -65,25 +69,33 @@ export default function DashboardOverviewPage() {
           <section className="border border-emerald/10 bg-white p-5">
             <div className="mb-4 flex items-center justify-between gap-3">
               <h2 className="font-display text-lg font-semibold text-ink">
-                Applications by specialization
+                Applications by interest
               </h2>
-              <Link
-                href="/admin/dashboard/applications"
-                className="text-sm text-emerald hover:underline"
-              >
-                Manage applications
-              </Link>
+              <div className="flex gap-3 text-sm">
+                <Link
+                  href="/admin/dashboard/applications"
+                  className="text-emerald hover:underline"
+                >
+                  Manage applications
+                </Link>
+                <Link
+                  href="/admin/dashboard/compare"
+                  className="text-emerald hover:underline"
+                >
+                  Compare applicants
+                </Link>
+              </div>
             </div>
-            {stats.bySpecialization.length === 0 ? (
+            {stats.byPosition?.length === 0 ? (
               <p className="text-sm text-ink/55">No applications yet.</p>
             ) : (
               <ul className="divide-y divide-emerald/10">
-                {stats.bySpecialization.map((row) => (
+                {(stats.byPosition || []).map((row) => (
                   <li
-                    key={row.specialization}
+                    key={row.position}
                     className="flex items-center justify-between py-3 text-sm"
                   >
-                    <span className="text-ink">{row.specialization}</span>
+                    <span className="text-ink">{row.position}</span>
                     <span className="font-medium text-emerald">{row.count}</span>
                   </li>
                 ))}

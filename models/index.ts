@@ -1,7 +1,9 @@
 export { Admin } from "./Admin";
 export { Application } from "./Application";
+export { AuditLog } from "./AuditLog";
 export { Evaluation } from "./Evaluation";
 export { Member } from "./Member";
+export { Notification } from "./Notification";
 export { Project } from "./Project";
 export { ProjectTeam } from "./ProjectTeam";
 export { RecruitmentSettings } from "./RecruitmentSettings";

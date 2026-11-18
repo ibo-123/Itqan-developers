@@ -14,6 +14,8 @@ const SpecializationSchema = new Schema(
     description: { type: String, required: true, trim: true, maxlength: 500 },
     isActive: { type: Boolean, default: true, index: true },
     sortOrder: { type: Number, default: 0 },
+    seats: { type: Number, default: 1, min: 1 },
+    isPosition: { type: Boolean, default: true },
   },
   { timestamps: true },
 );

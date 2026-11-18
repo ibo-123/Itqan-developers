@@ -1,23 +1,31 @@
 import { RECRUITMENT_STAGES } from "@/lib/constants";
 import { Container } from "@/components/ui/Container";
+import { Ornament } from "@/components/ui/Ornament";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-export function Recruitment() {
+type RecruitmentProps = {
+  stages?: string[];
+};
+
+export function Recruitment({ stages }: RecruitmentProps) {
+  const items = stages?.length ? stages : [...RECRUITMENT_STAGES];
+
   return (
-    <section className="bg-soft py-20 sm:py-24">
+    <section id="recruitment" className="scroll-mt-24 bg-white py-20 sm:py-24">
       <Container>
         <SectionHeading
-          eyebrow="Recruitment"
-          title="A transparent path into the community."
-          description="Applications are open to motivated students. Beginners are welcome — prior experience helps, but commitment and curiosity matter most. There is no fixed membership cap."
-          className="mb-12 sm:mb-14"
+          eyebrow="Process"
+          title="A clear recruitment timeline."
+          description="Every applicant moves through a transparent process managed by the ITQAN DEVELOPERS recruitment committee. Joining means becoming part of the organization and its broader activities."
+          className="mb-4"
         />
+        <Ornament className="mb-10 justify-start" tone="emerald" />
 
         <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {RECRUITMENT_STAGES.map((stage, index) => (
+          {items.map((stage, index) => (
             <li
               key={stage}
-              className="flex gap-4 border-l-2 border-gold/70 bg-white px-5 py-5"
+              className="flex gap-4 border-l-2 border-gold/70 bg-soft px-5 py-5"
             >
               <span className="font-display text-sm font-semibold text-emerald">
                 {String(index + 1).padStart(2, "0")}

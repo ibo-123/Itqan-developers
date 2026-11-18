@@ -5,82 +5,83 @@ import { Container } from "@/components/ui/Container";
 import { GeometricPattern } from "@/components/ui/GeometricPattern";
 import { Ornament } from "@/components/ui/Ornament";
 
-export function Hero() {
+type HeroProps = {
+  announcement?: string;
+  deadlineLabel?: string | null;
+  isOpen?: boolean;
+};
+
+export function Hero({
+  announcement,
+  deadlineLabel,
+  isOpen = true,
+}: HeroProps) {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-emerald-deep text-white">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_15%_20%,rgba(213,182,106,0.2),transparent_42%),radial-gradient(ellipse_at_85%_15%,rgba(255,255,255,0.07),transparent_38%),linear-gradient(165deg,#071814_0%,#0c2a23_38%,#123c32_72%,#1a4f42_100%)]" />
-      <GeometricPattern className="text-gold" opacity={0.11} variant="star" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_15%_20%,rgba(213,182,106,0.18),transparent_42%),linear-gradient(165deg,#071814_0%,#0c2a23_45%,#123c32_100%)]" />
+      <GeometricPattern className="text-gold" opacity={0.1} variant="star" />
 
-      {/* Large Islamic star frame — right visual plane */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-16 top-1/2 hidden h-[34rem] w-[34rem] -translate-y-1/2 lg:block"
+        className="pointer-events-none absolute -right-16 top-1/2 hidden h-[32rem] w-[32rem] -translate-y-1/2 lg:block"
       >
-        <div className="absolute inset-0 rotate-45 border border-gold/25 animate-float-slow" />
-        <div className="absolute inset-10 rotate-45 border border-gold/15 animate-float" />
-        <div className="absolute inset-[5.5rem] rotate-45 border border-gold/30" />
-        <div className="absolute inset-[9rem] rotate-45 bg-gradient-to-br from-gold/10 to-transparent" />
-        <div className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/70" />
+        <div className="absolute inset-0 rotate-45 border border-gold/20 animate-float-slow" />
+        <div className="absolute inset-12 rotate-45 border border-gold/15" />
       </div>
-
-      {/* Corner geometry */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-20 left-[6%] hidden h-28 w-28 border border-gold/20 rotate-45 md:block"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-28 left-[9%] hidden h-14 w-14 border border-gold/45 rotate-45 md:block"
-      />
-
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent animate-shimmer-line"
-      />
 
       <Container className="relative flex min-h-[100svh] flex-col justify-end pb-16 pt-28 sm:pb-20 sm:pt-32 lg:justify-center lg:pb-24">
         <div className="max-w-3xl animate-fade-up">
-          <div className="mb-6 flex items-center gap-3">
-            <span className="inline-flex items-center gap-2 border border-gold/30 bg-white/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-gold backdrop-blur-sm">
-              {SITE.university} Community
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            <span className="border border-gold/30 bg-white/5 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">
+              Community Recruitment
             </span>
-            <span className="font-arabic text-xl text-gold/90" dir="rtl">
-              {SITE.arabicName}
+            <span
+              className={`text-[11px] font-semibold uppercase tracking-[0.16em] ${
+                isOpen ? "text-gold" : "text-white/50"
+              }`}
+            >
+              {isOpen ? "Applications Open" : "Applications Closed"}
             </span>
           </div>
 
-          <p className="mb-4 font-display text-2xl font-semibold tracking-[0.1em] text-gold sm:text-3xl md:text-4xl">
+          <p className="mb-2 font-display text-xl font-semibold tracking-[0.08em] text-gold sm:text-2xl">
             {SITE.name}
           </p>
+          <p className="font-arabic text-2xl text-gold/85" dir="rtl">
+            {SITE.arabicName}
+          </p>
 
-          <h1 className="font-display text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-            BUILD BEYOND
-            <span className="mt-1 block bg-gradient-to-r from-gold-light via-gold to-gold-deep bg-clip-text text-transparent">
-              BOUNDARIES.
-            </span>
+          <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl">
+            Build Skills. Solve Problems.
+            <span className="mt-1 block text-gold">Create Impact.</span>
           </h1>
 
           <Ornament className="mt-7 justify-start" />
 
           <p className="mt-6 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">
-            An innovative community of developers, designers, and technology
-            enthusiasts working together to create meaningful digital solutions
-            — with excellence, integrity, and purpose.
+            {announcement ||
+              "Join ITQAN DEVELOPERS, a community of passionate students committed to programming, software engineering, innovation, and building meaningful digital solutions."}
           </p>
 
+          {deadlineLabel ? (
+            <p className="mt-4 text-sm text-white/55">
+              Application deadline: {deadlineLabel}
+            </p>
+          ) : null}
+
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button href="/apply" size="lg" variant="primary">
-              Join Our Community
+            <Button href={isOpen ? "/apply" : "/#recruitment"} size="lg" variant="primary">
+              Join Our Team
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button href="/projects" size="lg" variant="ghost">
-              Explore Our Work
+            <Button href="/about" size="lg" variant="ghost">
+              Discover ITQAN DEVELOPERS
               <ArrowUpRight className="h-4 w-4" />
             </Button>
           </div>
         </div>
 
-        <p className="mt-14 max-w-md text-xs uppercase tracking-[0.22em] text-white/40 animate-fade-up-delayed">
+        <p className="mt-14 text-xs uppercase tracking-[0.22em] text-white/40 animate-fade-up-delayed">
           {SITE.tagline}
         </p>
       </Container>

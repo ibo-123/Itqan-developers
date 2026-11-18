@@ -14,32 +14,31 @@ export default function ActivitiesPage() {
     <>
       <PageHero
         eyebrow="What we do"
-        title="Practical building across the software lifecycle."
-        description="From design and engineering to research and knowledge sharing — our activities expand as the community grows."
+        title="Learning, collaboration, and meaningful building."
+        description="From software development to workshops and knowledge sharing — our activities expand as the community grows."
       />
 
       <section className="bg-soft py-16 sm:py-20">
         <Container>
           <ul className="divide-y divide-emerald/10 border-y border-emerald/10">
             {ACTIVITIES.map((activity, index) => (
-              <li
-                key={activity}
-                className="flex items-baseline gap-4 py-5 sm:gap-6"
-              >
-                <span className="font-display text-sm text-gold-deep">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <span className="font-display text-lg text-ink sm:text-xl">
-                  {activity}
-                </span>
+              <li key={activity.title} className="py-5 sm:px-2">
+                <div className="flex items-baseline gap-4 sm:gap-6">
+                  <span className="font-display text-sm text-gold-deep">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h2 className="font-display text-lg text-ink sm:text-xl">
+                      {activity.title}
+                    </h2>
+                    <p className="mt-2 max-w-2xl text-sm text-ink/65">
+                      {activity.description}
+                    </p>
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
-          <p className="mt-10 max-w-2xl text-sm text-ink/60">
-            New specializations and activities can be added by administrators as
-            the community evolves — this list is a living foundation, not a
-            fixed boundary.
-          </p>
           <div className="mt-8">
             <Button href="/apply" variant="secondary">
               Apply to contribute

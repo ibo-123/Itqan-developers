@@ -9,7 +9,7 @@ import { Project } from "@/models/Project";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: `Community projects by ${SITE.name}, starting with ASTU_MSJ.`,
+  description: `Projects and initiatives by ${SITE.name}.`,
 };
 
 async function getProjects() {
@@ -30,9 +30,9 @@ export default async function ProjectsPage() {
   return (
     <>
       <PageHero
-        eyebrow="Projects"
-        title="Solutions shaped by community effort."
-        description="ASTU_MSJ is our first project — not the limit of what we build. Future websites, mobile apps, and platforms will be showcased here."
+        eyebrow="Projects & initiatives"
+        title="Work shaped by the community."
+        description="ITQAN DEVELOPERS undertakes multiple initiatives over time. ASTU_MSJ may appear here as one example — not the limit of what we build."
       />
 
       <section className="bg-soft py-16 sm:py-20">
@@ -43,7 +43,7 @@ export default async function ProjectsPage() {
                 Projects will appear here
               </p>
               <p className="mx-auto mt-2 max-w-md text-sm text-ink/60">
-                Seed the database or add projects from the admin dashboard.
+                Administrators can publish community projects from the dashboard.
               </p>
               <Button href="/apply" className="mt-6" variant="secondary">
                 Join and help build them

@@ -1,26 +1,25 @@
 import type { Metadata } from "next";
 import { SITE } from "@/lib/constants";
-import { ApplicationForm } from "@/components/forms/ApplicationForm";
+import { ApplicationWizard } from "@/components/forms/ApplicationWizard";
 import { Container } from "@/components/ui/Container";
 import { PageHero } from "@/components/ui/PageHero";
 
 export const metadata: Metadata = {
   title: "Apply",
-  description: `Membership application for ${SITE.name}.`,
+  description: `Join ${SITE.name} — community membership application.`,
 };
 
 export default function ApplyPage() {
   return (
     <>
       <PageHero
-        eyebrow="Apply"
+        eyebrow="Join the community"
         title="Membership application"
-        description="Beginners are welcome. Previous experience helps but is not required. Applicant information is private and never shown on public pages."
+        description="Apply to join ITQAN DEVELOPERS. Share your background, interests, and motivation. Beginners are welcome. Your information remains confidential."
       />
-
       <section className="bg-soft py-16 sm:py-20">
         <Container className="max-w-3xl">
-          <ApplicationForm />
+          <ApplicationWizard />
         </Container>
       </section>
     </>

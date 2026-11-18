@@ -62,7 +62,7 @@ export function Navbar() {
                 {SITE.arabicName}
               </span>
               <span className="mx-1.5 opacity-50">·</span>
-              {SITE.university}
+              {SITE.universityShort}
             </span>
           </span>
         </Link>

@@ -23,10 +23,15 @@ const LINKS = [
     label: "Applications",
     icon: FileText,
   },
+  {
+    href: "/admin/dashboard/compare",
+    label: "Compare",
+    icon: Tags,
+  },
   { href: "/admin/dashboard/members", label: "Members", icon: Users },
   {
     href: "/admin/dashboard/specializations",
-    label: "Specializations",
+    label: "Interests",
     icon: Tags,
   },
   { href: "/admin/dashboard/projects", label: "Projects", icon: FolderKanban },

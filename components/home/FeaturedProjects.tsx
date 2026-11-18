@@ -13,8 +13,8 @@ export function FeaturedProjects() {
         <div className="mb-8 flex flex-col gap-6 sm:mb-10 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading
             eyebrow="Projects"
-            title="Work that matters — starting with ASTU_MSJ."
-            description="ASTU_MSJ is our first community project. ITQAN DEVELOPERS will continue building websites, apps, platforms, and more."
+            title="Initiatives shaped by the community."
+            description="ITQAN DEVELOPERS builds websites, apps, platforms, and learning activities. Individual projects like ASTU_MSJ are examples — not the organization's identity."
           />
           <Link
             href="/projects"

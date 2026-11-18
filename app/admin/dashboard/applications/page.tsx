@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { APPLICATION_STATUSES } from "@/lib/validations/application";
+import { ACTIVE_STATUSES } from "@/lib/validations/application";
+import { STATUS_LABELS } from "@/lib/constants";
 import { Button } from "@/components/ui/Button";
 
 type ApplicationRow = {
@@ -11,7 +12,8 @@ type ApplicationRow = {
   email: string;
   department: string;
   yearOfStudy: string;
-  preferredSpecialization: string;
+  preferredPosition?: string;
+  preferredSpecialization?: string;
   status: string;
   experienceLevel: string;
   createdAt: string;
@@ -79,9 +81,9 @@ export default function ApplicationsPage() {
           className="rounded-md border border-emerald/15 px-3 py-2 text-sm"
         >
           <option value="">All statuses</option>
-          {APPLICATION_STATUSES.map((s) => (
+          {ACTIVE_STATUSES.map((s) => (
             <option key={s} value={s}>
-              {s}
+              {STATUS_LABELS[s] || s}
             </option>
           ))}
         </select>
@@ -131,11 +133,11 @@ export default function ApplicationsPage() {
                     </span>
                   </td>
                   <td className="px-4 py-3 text-ink/70">
-                    {item.preferredSpecialization}
+                    {item.preferredPosition || item.preferredSpecialization}
                   </td>
                   <td className="px-4 py-3">
-                    <span className="rounded bg-soft px-2 py-1 text-xs capitalize text-emerald">
-                      {item.status.replaceAll("_", " ")}
+                    <span className="rounded bg-soft px-2 py-1 text-xs text-emerald">
+                      {STATUS_LABELS[item.status] || item.status}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-right">

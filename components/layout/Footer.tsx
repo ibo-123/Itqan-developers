@@ -4,13 +4,15 @@ import { BrandMark } from "@/components/ui/BrandMark";
 import { Container } from "@/components/ui/Container";
 import { GeometricPattern } from "@/components/ui/GeometricPattern";
 import { Ornament } from "@/components/ui/Ornament";
+import { getContactEmail, getTelegramUrl } from "@/lib/site";
 
 export function Footer() {
+  const telegramUrl = getTelegramUrl();
+  const email = getContactEmail();
+
   return (
     <footer className="relative overflow-hidden bg-emerald-deep text-white">
       <GeometricPattern className="text-gold" opacity={0.07} variant="star" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_0%,rgba(213,182,106,0.12),transparent_40%)]" />
-
       <Container className="relative pt-14">
         <Ornament className="mb-10" />
       </Container>
@@ -29,13 +31,10 @@ export function Footer() {
             </div>
           </div>
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/70">
-            A growing software development and technology community at{" "}
-            {SITE.university} — building meaningful digital solutions with
-            purpose, precision, and excellence.
+            A technology community at {SITE.universityShort} where students learn,
+            collaborate, solve problems, and build meaningful digital solutions.
           </p>
-          <p className="mt-5 text-sm tracking-wide text-gold/90">
-            {SITE.tagline}
-          </p>
+          <p className="mt-5 text-sm tracking-wide text-gold/90">{SITE.tagline}</p>
         </div>
 
         <div>
@@ -43,7 +42,7 @@ export function Footer() {
             Explore
           </p>
           <ul className="mt-4 space-y-2.5">
-            {NAV_LINKS.map((link) => (
+            {NAV_LINKS.filter((link) => !link.href.includes("#")).map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
@@ -58,36 +57,34 @@ export function Footer() {
 
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-            Community
+            Contact
           </p>
           <ul className="mt-4 space-y-2.5 text-sm text-white/75">
             <li>
-              <Link href="/apply" className="transition-colors hover:text-gold">
-                Membership Application
+              <a href={`mailto:${email}`} className="hover:text-gold">
+                {email}
+              </a>
+            </li>
+            {telegramUrl ? (
+              <li>
+                <a
+                  href={telegramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gold"
+                >
+                  Telegram support
+                </a>
+              </li>
+            ) : null}
+            <li>
+              <Link href="/apply" className="hover:text-gold">
+                Apply to join
               </Link>
             </li>
             <li>
-              <Link
-                href="/membership"
-                className="transition-colors hover:text-gold"
-              >
-                Why Join
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/contact"
-                className="transition-colors hover:text-gold"
-              >
-                Contact
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/admin/login"
-                className="transition-colors hover:text-gold"
-              >
-                Admin Portal
+              <Link href="/admin/login" className="hover:text-gold">
+                Admin portal
               </Link>
             </li>
           </ul>

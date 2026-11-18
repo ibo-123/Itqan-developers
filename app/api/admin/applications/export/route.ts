@@ -31,22 +31,30 @@ export async function GET(request: NextRequest) {
       "universityId",
       "department",
       "yearOfStudy",
-      "preferredSpecialization",
+      "preferredPosition",
+      "secondaryPosition",
       "experienceLevel",
       "status",
       "timeCommitment",
+      "trackingCode",
       "createdAt",
     ];
 
     const rows = [
       headers.join(","),
-      ...items.map((item) =>
-        headers
-          .map((key) =>
-            csvEscape((item as Record<string, unknown>)[key]),
-          )
-          .join(","),
-      ),
+      ...items.map((item) => {
+        const record = item as Record<string, unknown>;
+        return headers
+          .map((key) => {
+            if (key === "preferredPosition") {
+              return csvEscape(
+                record.preferredPosition || record.preferredSpecialization || "",
+              );
+            }
+            return csvEscape(record[key]);
+          })
+          .join(",");
+      }),
     ];
 
     return new Response(rows.join("\n"), {

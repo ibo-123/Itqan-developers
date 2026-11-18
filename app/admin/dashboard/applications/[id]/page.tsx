@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { APPLICATION_STATUSES } from "@/lib/validations/application";
+import { ACTIVE_STATUSES } from "@/lib/validations/application";
+import { STATUS_LABELS } from "@/lib/constants";
 import { Button } from "@/components/ui/Button";
 
 type Application = {
@@ -13,20 +14,33 @@ type Application = {
   universityId?: string;
   department: string;
   yearOfStudy: string;
-  preferredSpecialization: string;
-  additionalSpecializations?: string[];
+  academicBackground?: string;
+  preferredPosition?: string;
+  secondaryPosition?: string;
+  preferredSpecialization?: string;
   programmingLanguages?: string;
   frameworks?: string;
+  databaseExperience?: string;
+  gitExperience?: string;
   experienceLevel: string;
   previousProjects?: string;
+  githubUrl?: string;
   portfolioUrl?: string;
   whyJoin: string;
+  whyAstuMsj?: string;
   contribution: string;
-  learningGoals: string;
+  learningGoals?: string;
   timeCommitment: string;
-  willingToCollaborate: boolean;
+  willingToParticipateAllPhases?: boolean;
   status: string;
+  statusHistory?: {
+    status: string;
+    note?: string;
+    changedByName?: string;
+    createdAt: string;
+  }[];
   internalNotes?: string;
+  trackingCode?: string;
 };
 
 type Evaluation = {
@@ -58,6 +72,7 @@ export default function ApplicationDetailPage() {
   const [evaluation, setEvaluation] = useState<Evaluation | null>(null);
   const [status, setStatus] = useState("");
   const [notes, setNotes] = useState("");
+  const [statusNote, setStatusNote] = useState("");
   const [scores, setScores] = useState<Record<string, number>>({
     technicalKnowledge: 0,
     commitment: 0,
@@ -101,7 +116,7 @@ export default function ApplicationDetailPage() {
     const res = await fetch(`/api/applications/${params.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status, internalNotes: notes }),
+      body: JSON.stringify({ status, internalNotes: notes, statusNote }),
     });
     const data = await res.json();
     if (!res.ok) {
@@ -130,7 +145,7 @@ export default function ApplicationDetailPage() {
       return;
     }
     setEvaluation(data.evaluation);
-    setMessage("Evaluation saved.");
+    setMessage("Evaluation saved. Scores inform decisions; they do not auto-accept.");
   }
 
   if (error && !application) {
@@ -167,37 +182,44 @@ export default function ApplicationDetailPage() {
 
       <section className="grid gap-6 lg:grid-cols-2">
         <div className="space-y-3 border border-emerald/10 bg-white p-5 text-sm">
-          <Info label="University ID" value={application.universityId || "—"} />
+          <Info label="Student ID" value={application.universityId || "—"} />
           <Info label="Department" value={application.department} />
           <Info label="Year" value={application.yearOfStudy} />
           <Info
-            label="Preferred specialization"
-            value={application.preferredSpecialization}
-          />
-          <Info
-            label="Additional"
-            value={(application.additionalSpecializations || []).join(", ") || "—"}
+            label="Areas of interest"
+            value={
+              (application as { areasOfInterest?: string[] }).areasOfInterest
+                ?.join(", ") ||
+              application.preferredPosition ||
+              application.preferredSpecialization ||
+              "—"
+            }
           />
           <Info label="Experience" value={application.experienceLevel} />
-          <Info
-            label="Languages"
-            value={application.programmingLanguages || "—"}
-          />
+          <Info label="Languages" value={application.programmingLanguages || "—"} />
           <Info label="Frameworks" value={application.frameworks || "—"} />
+          <Info label="Database" value={application.databaseExperience || "—"} />
+          <Info label="Git/GitHub" value={application.gitExperience || "—"} />
           <Info label="Availability" value={application.timeCommitment} />
-          <Info
-            label="Portfolio"
-            value={application.portfolioUrl || "—"}
-          />
+          <Info label="GitHub" value={application.githubUrl || "—"} />
+          <Info label="Portfolio" value={application.portfolioUrl || "—"} />
+          <Info label="Tracking code" value={application.trackingCode || "—"} />
         </div>
 
         <div className="space-y-4 border border-emerald/10 bg-white p-5 text-sm">
-          <Block title="Why join" body={application.whyJoin} />
+          <Block title="Why ITQAN" body={application.whyJoin} />
+          <Block
+            title="Learning goals"
+            body={application.learningGoals || application.whyAstuMsj || "—"}
+          />
           <Block title="Contribution" body={application.contribution} />
-          <Block title="Learning goals" body={application.learningGoals} />
           <Block
             title="Previous projects"
             body={application.previousProjects || "—"}
+          />
+          <Block
+            title="Academic background"
+            body={application.academicBackground || "—"}
           />
         </div>
       </section>
@@ -206,34 +228,57 @@ export default function ApplicationDetailPage() {
         <h2 className="font-display text-lg font-semibold text-ink">
           Status & notes
         </h2>
-        <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_2fr]">
+        <div className="mt-4 grid gap-4 sm:grid-cols-[1fr_1fr]">
           <select
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            className="rounded-md border border-emerald/15 px-3 py-2 text-sm"
+            className="rounded-sm border border-emerald/15 px-3 py-2 text-sm"
           >
-            {APPLICATION_STATUSES.map((s) => (
+            {ACTIVE_STATUSES.map((s) => (
               <option key={s} value={s}>
-                {s}
+                {STATUS_LABELS[s] || s}
               </option>
             ))}
           </select>
-          <textarea
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            rows={3}
-            placeholder="Internal notes (not visible to applicants)"
-            className="rounded-md border border-emerald/15 px-3 py-2 text-sm"
+          <input
+            value={statusNote}
+            onChange={(e) => setStatusNote(e.target.value)}
+            placeholder="Optional status change note"
+            className="rounded-sm border border-emerald/15 px-3 py-2 text-sm"
           />
         </div>
-        <Button
-          type="button"
-          variant="secondary"
-          className="mt-4"
-          onClick={saveStatus}
-        >
+        <textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          rows={3}
+          placeholder="Internal notes (not visible to applicants)"
+          className="mt-4 w-full rounded-sm border border-emerald/15 px-3 py-2 text-sm"
+        />
+        <Button type="button" variant="secondary" className="mt-4" onClick={saveStatus}>
           Save status
         </Button>
+
+        {application.statusHistory?.length ? (
+          <div className="mt-6 border-t border-emerald/10 pt-4">
+            <p className="text-xs font-semibold uppercase tracking-wide text-ink/45">
+              Status history
+            </p>
+            <ul className="mt-3 space-y-2 text-sm text-ink/70">
+              {application.statusHistory.map((entry, index) => (
+                <li key={`${entry.status}-${index}`}>
+                  <span className="font-medium text-ink">
+                    {STATUS_LABELS[entry.status] || entry.status}
+                  </span>
+                  {" · "}
+                  {entry.changedByName || "System"}
+                  {" · "}
+                  {new Date(entry.createdAt).toLocaleString()}
+                  {entry.note ? ` — ${entry.note}` : ""}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </section>
 
       <section className="border border-emerald/10 bg-white p-5">
@@ -262,7 +307,7 @@ export default function ApplicationDetailPage() {
                     [field.key]: Number(e.target.value),
                   }))
                 }
-                className="w-full rounded-md border border-emerald/15 px-3 py-2"
+                className="w-full rounded-sm border border-emerald/15 px-3 py-2"
               />
             </label>
           ))}
@@ -272,14 +317,9 @@ export default function ApplicationDetailPage() {
           onChange={(e) => setComments(e.target.value)}
           rows={3}
           placeholder="Evaluation comments"
-          className="mt-4 w-full rounded-md border border-emerald/15 px-3 py-2 text-sm"
+          className="mt-4 w-full rounded-sm border border-emerald/15 px-3 py-2 text-sm"
         />
-        <Button
-          type="button"
-          variant="secondary"
-          className="mt-4"
-          onClick={saveEvaluation}
-        >
+        <Button type="button" variant="secondary" className="mt-4" onClick={saveEvaluation}>
           Save evaluation
         </Button>
       </section>
@@ -291,7 +331,7 @@ function Info({ label, value }: { label: string; value: string }) {
   return (
     <div>
       <p className="text-xs uppercase tracking-wide text-ink/45">{label}</p>
-      <p className="mt-0.5 text-ink">{value}</p>
+      <p className="mt-0.5 break-all text-ink">{value}</p>
     </div>
   );
 }

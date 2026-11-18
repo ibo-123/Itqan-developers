@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
-import { SPECIALIZATIONS } from "../lib/constants";
+import { INTERESTS } from "../lib/constants";
 import { Admin } from "../models/Admin";
 import { Project } from "../models/Project";
 import { RecruitmentSettings } from "../models/RecruitmentSettings";
@@ -8,9 +8,7 @@ import { Specialization } from "../models/Specialization";
 
 async function seed() {
   const uri = process.env.MONGODB_URI;
-  if (!uri) {
-    throw new Error("MONGODB_URI is required");
-  }
+  if (!uri) throw new Error("MONGODB_URI is required");
 
   await mongoose.connect(uri);
 
@@ -33,7 +31,22 @@ async function seed() {
     console.log(`Admin already exists: ${adminEmail}`);
   }
 
-  for (const [index, item] of SPECIALIZATIONS.entries()) {
+  // Clear old fixed-seat position slugs that no longer apply
+  await Specialization.deleteMany({
+    slug: {
+      $in: [
+        "project-manager",
+        "frontend-1",
+        "frontend-2",
+        "backend-1",
+        "backend-2",
+        "project-management",
+        "other",
+      ],
+    },
+  });
+
+  for (const [index, item] of INTERESTS.entries()) {
     await Specialization.findOneAndUpdate(
       { slug: item.id },
       {
@@ -42,21 +55,40 @@ async function seed() {
         description: item.description,
         isActive: true,
         sortOrder: index,
+        seats: 99,
+        isPosition: false,
       },
-      { upsert: true, new: true },
+      { upsert: true, returnDocument: "after" },
     );
   }
-  console.log(`Seeded ${SPECIALIZATIONS.length} specializations`);
+  console.log(`Seeded ${INTERESTS.length} interest areas`);
+
+  const deadline = new Date();
+  deadline.setDate(deadline.getDate() + 45);
 
   await RecruitmentSettings.findOneAndUpdate(
     { key: "default" },
     {
       key: "default",
+      title: "ITQAN DEVELOPERS Community Recruitment",
+      description:
+        "ITQAN DEVELOPERS is recruiting motivated ASTU students to join a technology community focused on learning, collaboration, and building meaningful digital solutions.",
       isOpen: true,
+      opensAt: new Date(),
+      deadline,
+      maxSelectedApplicants: 50,
       announcement:
-        "Applications are open. Beginners are welcome — there is no fixed membership cap.",
+        "Applications are open to join ITQAN DEVELOPERS. Beginners are welcome.",
+      stages: [
+        "Application and Registration",
+        "Application Review",
+        "Practical Assessment (if applicable)",
+        "Interview",
+        "Final Selection",
+        "Orientation and Team Onboarding",
+      ],
     },
-    { upsert: true, new: true },
+    { upsert: true, returnDocument: "after" },
   );
   console.log("Seeded recruitment settings");
 
@@ -66,15 +98,15 @@ async function seed() {
       name: "ASTU_MSJ",
       slug: "astu-msj",
       description:
-        "A web platform project — the first community initiative of ITQAN DEVELOPERS, with more solutions to follow.",
+        "A web platform initiative developed by ITQAN DEVELOPERS at ASTU — one of several projects the community may undertake.",
       status: "in_progress",
-      tags: ["Web Platform", "Full-Stack"],
+      tags: ["Web Platform", "Community Project"],
       isFeatured: true,
       isPublic: true,
     },
-    { upsert: true, new: true },
+    { upsert: true, returnDocument: "after" },
   );
-  console.log("Seeded ASTU_MSJ project");
+  console.log("Seeded ASTU_MSJ as example project");
 
   await mongoose.disconnect();
   console.log("Seed complete");

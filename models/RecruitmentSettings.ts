@@ -3,32 +3,46 @@ import mongoose, { Schema, type InferSchemaType, type Model } from "mongoose";
 const RecruitmentSettingsSchema = new Schema(
   {
     key: { type: String, required: true, unique: true, default: "default" },
+    title: {
+      type: String,
+      trim: true,
+      default: "ITQAN DEVELOPERS Community Recruitment",
+    },
+    description: {
+      type: String,
+      trim: true,
+      default:
+        "ITQAN DEVELOPERS is recruiting motivated ASTU students to join a technology community focused on learning, collaboration, and building meaningful digital solutions.",
+    },
     isOpen: { type: Boolean, default: true },
+    opensAt: { type: Date, default: null },
+    deadline: { type: Date, default: null },
+    maxSelectedApplicants: { type: Number, default: 50, min: 1 },
     announcement: {
       type: String,
       trim: true,
       default:
-        "Applications are open. Beginners are welcome — there is no fixed membership cap.",
+        "Applications are open to join ITQAN DEVELOPERS. Beginners are welcome.",
     },
     stages: {
       type: [String],
       default: [
-        "Application Submission",
+        "Application and Registration",
         "Application Review",
-        "Practical Assessment (when applicable)",
+        "Practical Assessment (if applicable)",
         "Interview",
         "Final Selection",
-        "Orientation and Community Onboarding",
+        "Orientation and Team Onboarding",
       ],
     },
     statuses: {
       type: [String],
       default: [
-        "pending",
+        "submitted",
         "under_review",
-        "shortlisted",
-        "assessment",
+        "practical_assessment",
         "interview",
+        "shortlisted",
         "accepted",
         "rejected",
       ],

@@ -44,7 +44,7 @@ export default function SpecializationsAdminPage() {
       return;
     }
     setForm({ title: "", slug: "", description: "" });
-    setMessage("Specialization created.");
+    setMessage("Interest area created.");
     await load();
   }
 
@@ -58,7 +58,7 @@ export default function SpecializationsAdminPage() {
   }
 
   async function remove(item: Spec) {
-    if (!confirm(`Delete specialization "${item.title}"?`)) return;
+    if (!confirm(`Delete interest "${item.title}"?`)) return;
     await fetch(`/api/admin/specializations/${item._id}`, { method: "DELETE" });
     await load();
   }
@@ -67,10 +67,11 @@ export default function SpecializationsAdminPage() {
     <div className="space-y-8">
       <div>
         <h1 className="font-display text-3xl font-semibold text-ink">
-          Specializations
+          Areas of interest
         </h1>
         <p className="mt-1 text-sm text-ink/60">
-          Create, edit, enable, or disable categories. Multiple members per category.
+          Manage interest categories applicants can select. These are contribution
+          areas — not exclusive seat assignments.
         </p>
       </div>
 
@@ -101,7 +102,7 @@ export default function SpecializationsAdminPage() {
           rows={3}
         />
         <Button type="submit" variant="secondary" className="w-fit">
-          Create specialization
+          Create interest
         </Button>
       </form>
 

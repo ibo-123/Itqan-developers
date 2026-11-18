@@ -1,8 +1,10 @@
-# ITQAN DEVELOPERS
+# ITQAN DEVELOPERS — Community Recruitment Platform
 
-**إتقان** — Code with Purpose. Build with Excellence.
+**إتقان** — Code with Purpose. Build with Mastery.
 
-Official website and recruitment platform for ITQAN DEVELOPERS, a growing software development and technology community at ASTU.
+Recruitment and community management platform for **ITQAN DEVELOPERS**, a technology community at Adama Science and Technology University (ASTU).
+
+ASTU_MSJ is one project initiative under the organization — not the purpose of recruitment.
 
 ## Stack
 
@@ -10,55 +12,43 @@ Official website and recruitment platform for ITQAN DEVELOPERS, a growing softwa
 - Tailwind CSS
 - MongoDB + Mongoose
 - React Hook Form + Zod
-- Lucide React
-- Jose (admin JWT sessions) + bcryptjs
+- Jose JWT admin sessions + bcryptjs
+- Optional email via Resend
+- Optional Telegram contact via `NEXT_PUBLIC_TELEGRAM_URL`
 
 ## Getting started
 
 ```bash
-# Install dependencies
 npm install
-
-# Configure environment
 cp .env.local.example .env.local
-
-# Ensure MongoDB is running, then seed defaults
 npm run seed
-
-# Run the development server
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-### Default admin (after seed)
+### Default admin
 
 - Email: `admin@itqan.local`
 - Password: `ItqanAdmin2026!`
 
-Change these in production.
+## Key env vars
+
+| Variable | Purpose |
+|----------|---------|
+| `MONGODB_URI` | Database connection |
+| `AUTH_SECRET` | Admin JWT secret |
+| `NEXT_PUBLIC_TELEGRAM_URL` | Official Telegram support URL |
+| `RESEND_API_KEY` | Optional email delivery |
 
 ## Scripts
 
-| Command         | Description                |
-| --------------- | -------------------------- |
-| `npm run dev`   | Start development server   |
-| `npm run build` | Production build           |
-| `npm run start` | Start production server    |
-| `npm run seed`  | Seed admin, specs, project  |
-| `npm run lint`  | Run ESLint                 |
-
-## Key routes
-
-- `/` — Homepage
-- `/apply` — Membership application
-- `/projects` — Public projects
-- `/admin/login` — Admin sign-in
-- `/admin/dashboard` — Protected dashboard
-
-## Membership note
-
-There is **no fixed maximum** number of members. Founding specializations are focus areas — multiple people can join each specialization.
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run seed` | Seed admin, interests, settings, example project |
+| `npm run test:unit` | Schema unit checks |
 
 ## License
 

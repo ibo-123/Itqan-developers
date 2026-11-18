@@ -13,8 +13,8 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About us"
-        title="Excellence as a practice, not a slogan."
-        description={`${SITE.name} (${SITE.arabicName}) means excellence, precision, dedication, and doing work with quality. We are building a lasting technology community at ${SITE.university}.`}
+        title="Mastery as a practice, not a slogan."
+        description={`${SITE.name} (${SITE.arabicName}) means ${SITE.meaning.toLowerCase()}. We are a technology community at ${SITE.universityShort} dedicated to learning, collaboration, and purposeful building.`}
       />
 
       <section className="bg-soft py-16 sm:py-20">
@@ -47,8 +47,7 @@ export default function AboutPage() {
             Core values
           </h2>
           <p className="mt-3 max-w-2xl text-ink/65">
-            These principles shape how we collaborate, ship projects, and grow
-            as a community.
+            These principles shape how we collaborate, learn, and contribute.
           </p>
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {CORE_VALUES.map((value) => (
